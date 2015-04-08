@@ -198,7 +198,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        "data-index": index,
 	        className: this.getSlideClasses(index),
 	        style: _assign({}, this.getSlideStyle(), child.props.style) }));
-
 	      if (this.props.infinite === true) {
 	        if (this.props.centerMode === true) {
 	          infiniteCount = this.props.slidesToShow + 1;
@@ -225,7 +224,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }
 	    }).bind(this));
-
 	    return preCloneSlides.concat(slides, postCloneSlides);
 	  },
 	  renderTrack: function () {
@@ -277,6 +275,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  },
 	  render: function () {
+
 	    var className = classnames("slick-initialized", "slick-slider", this.props.className);
 	    return React.createElement(
 	      "div",
@@ -297,8 +296,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          onTouchCancel: this.state.dragging ? this.swipeEnd : null },
 	        this.renderTrack()
 	      ),
-	      this.renderArrows(),
-	      this.renderDots()
+				this.renderArrows(),
+				this.renderDots()
 	    );
 	  }
 	});
@@ -434,7 +433,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    enquire.register(query, handler);
 
-	    // Queue the handlers to unregister them at unmount  
+	    // Queue the handlers to unregister them at unmount
 	    if (! this._responsiveMediaHandlers) {
 	      this._responsiveMediaHandlers = [];
 	    }
@@ -669,12 +668,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var EventHandlers = {
 	  // Event handler for previous and next
 	  changeSlide: function (options, e) {
-	    // console.log('changeSlide');
 	    var indexOffset, slideOffset, unevenOffset;
 	    unevenOffset = (this.state.slideCount % this.props.slidesToScroll !== 0);
 	    indexOffset = unevenOffset ? 0 : (this.state.slideCount - this.state.currentSlide) % this.props.slidesToScroll;
-
 	    if (options.message === 'previous') {
+
 	      slideOffset = (indexOffset === 0) ? this.props.slidesToScroll : this.props.slidesToShow - indexOffset;
 	      if (this.state.slideCount > this.props.slidesToShow) {
 	        this.slideHandler(this.state.currentSlide  - slideOffset, false);
@@ -696,7 +694,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // Accessiblity handler for previous and next
 	  keyHandler: function (e) {
 
-	  }, 
+	  },
 	  // Focus on selecting a slide (click handler on track)
 	  selectHandler: function (e) {
 
@@ -719,7 +717,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        curX: posX,
 	        curY: posY
 	      }
-	    });   
+	    });
 	    e.preventDefault();
 	  },
 	  swipeMove: function (e) {
@@ -737,7 +735,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    touchObject.curX =  (e.touches )? e.touches[0].pageX : e.clientX;
 	    touchObject.curY =  (e.touches )? e.touches[0].pageY : e.clientY;
 	    touchObject.swipeLength = Math.round(Math.sqrt(Math.pow(touchObject.curX - touchObject.startX, 2)));
-	    
+
 	    positionOffset = (this.props.rtl === false ? 1 : -1) * (touchObject.curX > touchObject.startX ? 1 : -1);
 	    swipeLeft = curLeft + touchObject.swipeLength * positionOffset;
 	    this.setState({
@@ -758,8 +756,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.setState({
 	      dragging: false,
 	      swipeLeft: null,
-	      touchObject: {} 
-	    }); 
+	      touchObject: {}
+	    });
 	    // Fix for #13
 	    if (!touchObject.swipeLength) {
 	      return;
@@ -791,10 +789,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var helpers = {
 	  initialize: function (props) {
-	    var slideCount = React.Children.count(props.children);
+			var slideCount = React.Children.count(props.children);
 	    var listWidth = this.refs.list.getDOMNode().getBoundingClientRect().width;
 	    var trackWidth = this.refs.track.getDOMNode().getBoundingClientRect().width;
-	    var slideWidth = this.getDOMNode().getBoundingClientRect().width/props.slidesToShow;
+			var slideWidth = 960;
+	    // var slideWidth = this.getDOMNode().getBoundingClientRect().width/props.slidesToShow;
 
 	    this.setState({
 	      slideCount: slideCount,
@@ -802,8 +801,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      listWidth: listWidth,
 	      trackWidth: trackWidth,
 	      currentSlide: props.initialSlide
-	    
-	    
+
+
 	    }, function () {
 	      // getCSS function needs previously set state
 	      var trackStyle = this.getCSS(this.getLeft(this.state.currentSlide));
@@ -811,6 +810,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	      this.autoPlay(); // once we're set up, trigger the initial autoplay.
 	    });
+
 	  },
 	  getDotCount: function () {
 	    var pagerQty;
@@ -842,7 +842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    } else if (this.props.centerMode === true) {
 	        slideOffset = this.state.slideWidth * Math.floor(this.props.slidesToShow / 2);
 	    }
-	    
+
 	    targetLeft = ((slideIndex * this.state.slideWidth) * -1) + slideOffset;
 
 	    if (this.props.variableWidth === true) {
@@ -860,14 +860,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            } else {
 	                targetSlide = this.refs.track.getDOMNode().childNodes[(slideIndex + this.props.slidesToShow + 1)];
 	            }
-	            
+
 	            targetLeft = targetSlide ? targetSlide.offsetLeft * -1 : 0;
 	            targetLeft += (this.state.listWidth - targetSlide.offsetWidth) / 2;
 	        }
 	    }
-	    
+
 	    return targetLeft;
-	    
+
 	  },
 	  getAnimateCSS: function (targetLeft) {
 	    var style = this.getCSS(targetLeft);
@@ -893,7 +893,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      transition: '',
 	      WebkitTransition: ''
 	    };
-	    
+
 	    return style;
 	  },
 	  getSlideStyle: function () {
@@ -916,11 +916,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      centerOffset = Math.floor(this.props.slidesToShow / 2);
 	      indexOffset = this.state.currentSlide + this.props.slidesToShow;
-	      centerIndex = this.state.currentSlide + centerOffset; 
+	      centerIndex = this.state.currentSlide + centerOffset;
 	      slickCenter = (centerIndex-1 === index);
 	      if (this.state.currentSlide >= centerOffset && this.state.currentSlide <= (this.props.slideCount - 1) - centerOffset) {
 	        realRange = true;
-	      } 
+	      }
 	       if (realRange && (index > this.state.currentSlide - centerOffset) && (index <= this.state.currentSlide + centerOffset + 1 )) {
 	        slickActive = true;
 	       } else {
@@ -948,15 +948,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  slideHandler: function (index, sync, dontAnimate) {
 	    // Functionality of animateSlide and postSlide is merged into this function
-	    // console.log('slideHandler', index);
 	    var targetSlide, currentSlide;
 	    var targetLeft, currentLeft;
-	    
+
 	    if (this.state.animating === true) {
 	      return;
 	    }
 
-	    // To prevent the slider from sticking in animating state, If we click on already active dot 
+	    // To prevent the slider from sticking in animating state, If we click on already active dot
 	    if (this.props.fade === true && this.state.currentSlide === index) {
 	      return;
 	    }
@@ -981,6 +980,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      currentSlide = targetSlide;
 	    }
 
+
+
 	    targetLeft = this.getLeft(targetSlide, this.state);
 	    currentLeft = this.getLeft(currentSlide, this.state);
 
@@ -988,16 +989,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      targetLeft = currentLeft;
 	    }
 
-	    if(this.props.afterChange!==null){
-	      this.props.afterChange(currentSlide);
-	    }
-
-	    var callback = function() {  
+	    var callback = function() {
 	        this.setState({
 	          animating: false,
 	          trackStyle: this.getCSS(currentLeft),
 	          swipeLeft: null
-	        });
+	        }, function(){
+						ReactTransitionEvents.removeEndEventListener(this.refs.track.getDOMNode(), callback);
+						if(this.props.afterChange!==null){
+				      this.props.afterChange(currentSlide);
+				    }
+					});
 	    }.bind(this)
 
 	    this.setState({
@@ -1007,7 +1009,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      trackStyle: this.getAnimateCSS(targetLeft)
 	    }, function () {
 	      ReactTransitionEvents.addEndEventListener(this.refs.track.getDOMNode(), callback);
-	      setTimeout(callback, this.props.speed);
 	    });
 
 	    this.autoPlay();
@@ -1069,7 +1070,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    slideCount: null,
 	    slideWidth: null,
 	    // sliding: false,
-	    // slideOffset: 0, 
+	    // slideOffset: 0,
 	    swipeLeft: null,
 	    touchObject: {
 	      startX: 0,
@@ -1077,7 +1078,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      curX: 0,
 	      curY: 0
 	    },
-	     
+
 	    // added for react
 	    initialized: false,
 	    trackStyle: {},
@@ -1231,7 +1232,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 
 	  var newProps = ReactPropTransferer.mergeProps(props, child.props);
-
 	  // Use `child.props.children` if it is provided.
 	  if (!newProps.hasOwnProperty(CHILDREN_PROP) &&
 	      child.props.hasOwnProperty(CHILDREN_PROP)) {
@@ -2117,7 +2117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        /**
 	         * removes the given handler from the collection, and calls it's destroy methods
-	         * 
+	         *
 	         * @param {object || function} handler the handler to remove
 	         */
 	        removeHandler : function(handler) {
@@ -2132,7 +2132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        /**
 	         * Determine whether the media query should be considered a match
-	         * 
+	         *
 	         * @return {Boolean} true if media query can be considered a match, false otherwise
 	         */
 	        matches : function() {
